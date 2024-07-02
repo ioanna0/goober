@@ -1,0 +1,43 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  role  Role
+  ridesAsRider Ride[] @relation("Rider")
+  ridesAsDriver Ride[] @relation("Driver")
+}
+
+model Ride {
+  id         Int      @id @default(autoincrement())
+  pickup     String
+  dropoff    String
+  fare       Float
+  status     RideStatus @default(PENDING)
+  riderId    Int
+  driverId   Int?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  rider      User @relation("Rider", fields: [riderId], references: [id])
+  driver     User? @relation("Driver", fields: [driverId], references: [id])
+}
+
+enum Role {
+  RIDER
+  DRIVER
+}
+
+enum RideStatus {
+  PENDING
+  ACCEPTED
+  COMPLETED
+  CANCELLED
+}
