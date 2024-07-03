@@ -78,7 +78,7 @@ export default function RideForm() {
     setLat: (lat: number | undefined) => void,
     setLng: (lng: number | undefined) => void,
   ) => {
-    const address = place.formatted_address || "";
+    const address = place.formatted_address ?? "";
     setLocation(address);
     setLat(place.geometry?.location?.lat());
     setLng(place.geometry?.location?.lng());
