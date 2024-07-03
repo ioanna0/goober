@@ -1,4 +1,4 @@
-import { Container, Title, List, ListItem, Button } from "@mantine/core";
+import { Container, Title, List, Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { api } from "~/utils/api";
 
@@ -44,7 +44,8 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
             <div className="mb-2 font-bold">
               {request.pickup} to {request.dropoff}
             </div>
-            <div>Fare: {request.fare} USD</div>
+            <div>Fare: {request.fare.toFixed(2)} USD</div>
+            <div>Distance: {request.distance.toFixed(2)} km</div>
             <Button
               onClick={() => handleAcceptRequest(request.id)}
               className="mt-2"
