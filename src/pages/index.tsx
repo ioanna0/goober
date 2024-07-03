@@ -23,12 +23,6 @@ export default function Home() {
               Request a Ride
             </Link>
             <Link
-              href="/cancel-ride"
-              className="block text-blue-500 hover:underline"
-            >
-              Cancel a Ride
-            </Link>
-            <Link
               href="/view-rides"
               className="block text-blue-500 hover:underline"
             >

@@ -16,12 +16,6 @@ export default function Navbar() {
             Request a Ride
           </Link>
           <Link
-            href="/cancel-ride"
-            className="text-sm text-white hover:text-gray-200"
-          >
-            Cancel a Ride
-          </Link>
-          <Link
             href="/view-rides"
             className="text-sm text-white hover:text-gray-200"
           >
