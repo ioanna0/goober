@@ -5,10 +5,12 @@ export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-      },
-    },
-  },
+        fontFamily: {
+            'montserrat': ['Montserrat'],
+            'lato': ['Lato'],
+            'garamond': ['Garamond']
+        }
+    }
+},
   plugins: [],
 } satisfies Config;

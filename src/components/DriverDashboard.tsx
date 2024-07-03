@@ -47,6 +47,8 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
             <div>Fare: {request.fare.toFixed(2)} USD</div>
             <div>Distance: {request.distance.toFixed(2)} km</div>
             <Button
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan" }}
               onClick={() => handleAcceptRequest(request.id)}
               className="mt-2"
             >

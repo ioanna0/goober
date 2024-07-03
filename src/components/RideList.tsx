@@ -50,7 +50,12 @@ export default function RideList({ userId }: { userId: number }) {
             <div>Distance: {ride.distance.toFixed(2)} km</div>
             <div>Status: {ride.status}</div>
             {ride.status !== "CANCELLED" && (
-              <Button onClick={() => handleCancelRide(ride.id)} fullWidth>
+              <Button
+                variant="gradient"
+                gradient={{ from: "indigo", to: "cyan" }}
+                onClick={() => handleCancelRide(ride.id)}
+                fullWidth
+              >
                 Cancel Ride
               </Button>
             )}

@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { Alert, Button, TextInput, Title } from "@mantine/core";
+import {
+  Alert,
+  Blockquote,
+  Button,
+  Container,
+  Paper,
+  Title,
+} from "@mantine/core";
 import { api } from "~/utils/api";
-import axios from "axios";
-
 import { showNotification } from "@mantine/notifications";
 import { calculateFare, getDistanceFromLatLonInKm } from "~/utils/goober-utils";
 import GooglePlacesAutocomplete from "./GooglePlacesAutocomplete";
@@ -14,11 +19,13 @@ export default function RideForm() {
   const [pickupLng, setPickupLng] = useState<number>();
   const [dropoffLat, setDropoffLat] = useState<number>();
   const [dropoffLng, setDropoffLng] = useState<number>();
+  const [fare, setFare] = useState<number>();
+  const [distance, setDistance] = useState<number>();
   const [message, setMessage] = useState<string | null>(null);
   const riderId = 1; // Dummy riderId for example purposes
   const requestRideMutation = api.goober.requestRide.useMutation();
 
-  const handleRequestRide = async () => {
+  const handleCalculateFare = async () => {
     if (
       !pickup ||
       !dropoff ||
@@ -34,33 +41,44 @@ export default function RideForm() {
       });
       return;
     }
-    const distance = getDistanceFromLatLonInKm(
+    const distanceInKM = getDistanceFromLatLonInKm(
       pickupLat,
       pickupLng,
       dropoffLat,
       dropoffLng,
     );
-    const calculatedFare = calculateFare(distance);
-    const fare = calculatedFare;
+    setDistance(distanceInKM);
+    const calculatedFare = calculateFare(distanceInKM);
+    setFare(calculatedFare);
+    const distanceFormatted = distanceInKM.toFixed(2);
+    const fareFormatted = calculatedFare.toFixed(2);
+    setMessage(
+      `Your ride will be <i>${distanceFormatted} KM</i> long and will cost <b>${fareFormatted} USD</b>.`,
+    );
+  };
+
+  const handleRequestRide = async () => {
     try {
       await requestRideMutation.mutateAsync({
         pickup,
         dropoff,
-        fare,
+        fare: fare ?? 0,
         riderId,
-        pickupLat,
-        pickupLng,
-        dropoffLat,
-        dropoffLng,
-        distance,
+        pickupLat: pickupLat ?? 0,
+        pickupLng: pickupLng ?? 0,
+        dropoffLat: dropoffLat ?? 0,
+        dropoffLng: dropoffLng ?? 0,
+        distance: distance ?? 0,
       });
       showNotification({
         title: "Ride Requested",
         message: "Your ride has been requested successfully",
         color: "green",
       });
+      const distanceFormatted = distance?.toFixed(2);
+      const fareFormatted = fare?.toFixed(2);
       setMessage(
-        `Your ride will be ${distance.toFixed(2)} KM distance long and it will cost you ${fare.toFixed(2)} USD.`,
+        `Your ride will be <i>${distanceFormatted} KM</i> long and will cost <b>${fareFormatted} USD</b>.`,
       );
     } catch (error) {
       setMessage(null);
@@ -85,9 +103,9 @@ export default function RideForm() {
   };
 
   return (
-    <>
-      <div className="mx-auto max-w-md rounded-md border border-gray-200 bg-white p-6 shadow-md">
-        <Title order={2} className="mb-4 text-center">
+    <Container size="xs" px="xs">
+      <Paper shadow="xl" p="lg" radius="md">
+        <Title order={2} mb="lg">
           Request a Ride
         </Title>
         <GooglePlacesAutocomplete
@@ -102,19 +120,34 @@ export default function RideForm() {
             handlePlaceSelected(place, setDropoff, setDropoffLat, setDropoffLng)
           }
         />
-        <Button
-          onClick={handleRequestRide}
-          fullWidth
-          className="bg-blue-500 text-white hover:bg-blue-600"
-        >
-          Request Ride
-        </Button>
-      </div>
-      {message && (
-        <Alert variant="light" color="green" title="Ride Information">
-          {message}
-        </Alert>
-      )}
-    </>
+        {!message && (
+          <Button
+            onClick={handleCalculateFare}
+            fullWidth
+            mt="md"
+            variant="gradient"
+            gradient={{ from: "indigo", to: "cyan" }}
+          >
+            Calculate Fare
+          </Button>
+        )}
+        {message && (
+          <>
+            <Blockquote mt="lg" color="indigo" cite="– Goober Ride Service">
+              <span dangerouslySetInnerHTML={{ __html: message }} />
+            </Blockquote>
+            <Button
+              onClick={handleRequestRide}
+              fullWidth
+              mt="md"
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan" }}
+            >
+              Request Ride
+            </Button>
+          </>
+        )}
+      </Paper>
+    </Container>
   );
 }
