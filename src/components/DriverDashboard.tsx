@@ -1,4 +1,12 @@
-import { Container, Title, List, Button } from "@mantine/core";
+import {
+  Container,
+  Title,
+  List,
+  Button,
+  Loader,
+  Notification,
+  Paper,
+} from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { api } from "~/utils/api";
 
@@ -24,37 +32,58 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
   };
 
   if (getRequestsQuery.isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Container className="flex min-h-screen items-center justify-center">
+        <Loader size="xl" variant="dots" />
+      </Container>
+    );
   }
 
   if (getRequestsQuery.error) {
-    return <div>Error loading ride requests</div>;
+    return (
+      <Container className="flex min-h-screen items-center justify-center">
+        <Notification color="red" title="Error">
+          Error loading ride requests
+        </Notification>
+      </Container>
+    );
   }
 
   const requests = getRequestsQuery.data;
 
   return (
-    <Container className="rounded-md bg-white p-6 shadow-md">
-      <Title order={2} className="mb-4 text-center">
+    <Container className="mx-auto max-w-3xl rounded-md bg-white shadow-xl">
+      <Title order={3} mb={10} className="text-center text-indigo-600">
         Ride Requests
       </Title>
       <List className="space-y-4">
         {requests?.map((request) => (
-          <div key={request.id} className="rounded-md border p-4 shadow-sm">
-            <div className="mb-2 font-bold">
+          <Paper
+            key={request.id}
+            shadow="sm"
+            p="md"
+            withBorder
+            className="transition-shadow duration-300 hover:shadow-lg"
+          >
+            <div className="mb-2 font-bold text-gray-700">
               {request.pickup} to {request.dropoff}
             </div>
-            <div>Fare: {request.fare.toFixed(2)} USD</div>
-            <div>Distance: {request.distance.toFixed(2)} km</div>
+            <div className="text-gray-600">
+              Fare: ${request.fare.toFixed(2)} USD
+            </div>
+            <div className="text-gray-600">
+              Distance: {request.distance.toFixed(2)} km
+            </div>
             <Button
               variant="gradient"
               gradient={{ from: "indigo", to: "cyan" }}
               onClick={() => handleAcceptRequest(request.id)}
-              className="mt-2"
+              className="mt-4"
+              fullWidth
             >
               Accept
             </Button>
-          </div>
+          </Paper>
         ))}
       </List>
     </Container>
