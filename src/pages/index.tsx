@@ -11,15 +11,36 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center ">
-        <Container>
-          <Title>Welcome to Goober</Title>
-          <Link href="/request-ride">Request a Ride</Link>
-          <br />
-          <Link href="/cancel-ride">Cancel a Ride</Link>
-          <br />
-          <Link href="/view-rides">View Your Rides</Link>
-          <br />
-          <Link href="/driver-dashboard">Driver Dashboard</Link>
+        <Container className="rounded-md bg-white p-6 text-center shadow-md">
+          <Title order={2} className="mb-4">
+            Welcome to Goober
+          </Title>
+          <div className="space-y-4">
+            <Link
+              href="/request-ride"
+              className="block text-blue-500 hover:underline"
+            >
+              Request a Ride
+            </Link>
+            <Link
+              href="/cancel-ride"
+              className="block text-blue-500 hover:underline"
+            >
+              Cancel a Ride
+            </Link>
+            <Link
+              href="/view-rides"
+              className="block text-blue-500 hover:underline"
+            >
+              View Your Rides
+            </Link>
+            <Link
+              href="/driver-dashboard"
+              className="block text-blue-500 hover:underline"
+            >
+              Driver Dashboard
+            </Link>
+          </div>
         </Container>
       </main>
     </>

@@ -34,16 +34,24 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
   const requests = getRequestsQuery.data;
 
   return (
-    <Container>
-      <Title>Ride Requests</Title>
-      <List>
-        {requests.map((request: any) => (
-          <ListItem key={request.id}>
-            {request.pickup} to {request.dropoff} - {request.fare} USD
-            <Button onClick={() => handleAcceptRequest(request.id)} ml="md">
+    <Container className="rounded-md bg-white p-6 shadow-md">
+      <Title order={2} className="mb-4 text-center">
+        Ride Requests
+      </Title>
+      <List className="space-y-4">
+        {requests?.map((request) => (
+          <div key={request.id} className="rounded-md border p-4 shadow-sm">
+            <div className="mb-2 font-bold">
+              {request.pickup} to {request.dropoff}
+            </div>
+            <div>Fare: {request.fare} USD</div>
+            <Button
+              onClick={() => handleAcceptRequest(request.id)}
+              className="mt-2"
+            >
               Accept
             </Button>
-          </ListItem>
+          </div>
         ))}
       </List>
     </Container>

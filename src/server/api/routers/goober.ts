@@ -10,6 +10,11 @@ export const gooberRouter = createTRPCRouter({
       dropoff: z.string(),
       fare: z.number(),
       riderId: z.number(),
+      pickupLat: z.number(),
+      pickupLng: z.number(),
+      dropoffLat: z.number(),
+      dropoffLng: z.number(),
+      distance: z.number(),
     }))
     .mutation(async ({ ctx, input }) => {
       const ride = await db.ride.create({
@@ -18,6 +23,11 @@ export const gooberRouter = createTRPCRouter({
           dropoff: input.dropoff,
           fare: input.fare,
           riderId: input.riderId,
+          pickupLat: input.pickupLat,
+          pickupLng: input.pickupLng,
+          dropoffLat: input.dropoffLat,
+          dropoffLng: input.dropoffLng,
+          distance: input.distance,
         },
       });
       return ride;

@@ -25,6 +25,11 @@ model Ride {
   driverId   Int?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  pickupLat  Float
+  pickupLng  Float
+  dropoffLat Float
+  dropoffLng Float
+  distance   Float
 
   rider      User @relation("Rider", fields: [riderId], references: [id])
   driver     User? @relation("Driver", fields: [driverId], references: [id])
