@@ -6,9 +6,15 @@ export default function Navbar() {
     <nav className="bg-blue-500 p-4 shadow-md">
       <Container className="mx-auto flex items-center justify-between">
         <Link href="/" className="text-lg font-bold text-white">
-          Goober
+          Goober 🚚
         </Link>
         <div className="space-x-4">
+          <Link
+            href="/rider"
+            className="text-sm text-white hover:text-gray-200"
+          >
+            I'm a Rider
+          </Link>
           <Link
             href="/request-ride"
             className="text-sm text-white hover:text-gray-200"

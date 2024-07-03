@@ -76,7 +76,8 @@ const desktopTheme: MantineThemeOverride = {
   // defaultGradient: { deg: number; from: MantineColor; to: MantineColor };
 
   // font-family and line-height used in most components
-  fontFamily: 'Montserrat',
+  fontFamily: 'Montserrat, sans-serif',
+  headings: { fontFamily: 'Montserrat, sans-serif' },
   lineHeights: {
     xs: '1.16',
     sm: '1.16',
