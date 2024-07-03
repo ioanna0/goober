@@ -105,7 +105,7 @@ export default function RideForm() {
   return (
     <Container size="xs" px="xs">
       <Paper shadow="xl" p="lg" radius="md">
-        <Title order={2} mb="lg">
+        <Title order={3} mb="lg">
           Request a Ride
         </Title>
         <GooglePlacesAutocomplete
