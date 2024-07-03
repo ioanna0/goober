@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { PrismaClient } from "@prisma/client";
 
 import { env } from "~/env";
