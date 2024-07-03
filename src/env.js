@@ -1,4 +1,4 @@
-// @ts-expect-error
+// @ts-expect-error - Ignore missing types for `dotenv`
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
