@@ -64,7 +64,7 @@ export default function RideList({ userId }: { userId: number }) {
           <Paper
             key={ride.id}
             shadow="sm"
-            padding="md"
+            p="md"
             withBorder
             className="transition-shadow duration-300 hover:shadow-lg"
           >
