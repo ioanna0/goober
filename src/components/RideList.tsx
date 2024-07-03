@@ -15,13 +15,18 @@ export default function RideList({ userId }: { userId: number }) {
   const rides = getRidesQuery.data;
 
   return (
-    <Container>
-      <Title>Your Rides</Title>
-      <List>
+    <Container className="rounded-md bg-white p-6 shadow-md">
+      <Title order={2} className="mb-4 text-center">
+        Your Rides
+      </Title>
+      <List className="space-y-4">
         {rides?.map((ride) => (
-          <ListItem key={ride.id}>
-            {ride.pickup} to {ride.dropoff} - {ride.status}
-          </ListItem>
+          <div key={ride.id} className="rounded-md border p-4 shadow-sm">
+            <div className="mb-2 font-bold">
+              {ride.pickup} to {ride.dropoff}
+            </div>
+            <div>Status: {ride.status}</div>
+          </div>
         ))}
       </List>
     </Container>

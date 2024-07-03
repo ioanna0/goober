@@ -2,6 +2,11 @@
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
+# Steps
+1. Run `yarn` to install dependencies
+2. Run `yarn run db:seed` to seed the database with 2 users, one driver and one rider
+3. Run `yarn dev` to start the development server
+
 ## What's next? How do I make an app with this?
 
 We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.

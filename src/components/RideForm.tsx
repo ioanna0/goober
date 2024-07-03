@@ -40,26 +40,35 @@ export default function RideForm() {
   };
 
   return (
-    <Container>
-      <Title>Request a Ride</Title>
+    <div className="mx-auto max-w-md rounded-md border border-gray-200 bg-white p-6 shadow-md">
+      <Title order={2} className="mb-4 text-center">
+        Request a Ride
+      </Title>
       <TextInput
         label="Pickup Location"
         value={pickup}
         onChange={(event) => setPickup(event.currentTarget.value)}
+        className="mb-4 rounded-md border border-gray-300 p-2"
       />
       <TextInput
         label="Dropoff Location"
         value={dropoff}
         onChange={(event) => setDropoff(event.currentTarget.value)}
+        className="mb-4 rounded-md border border-gray-300 p-2"
       />
       <NumberInput
         label="Fare"
         value={fare}
-        onChange={(value) => setFare(value ? Number : 0)}
+        onChange={(value) => setFare(value ? Number(value) : 0)}
+        className="mb-4 rounded-md border border-gray-300 p-2"
       />
-      <Button onClick={handleRequestRide} mt="md">
+      <Button
+        onClick={handleRequestRide}
+        fullWidth
+        className="bg-blue-500 text-white hover:bg-blue-600"
+      >
         Request Ride
       </Button>
-    </Container>
+    </div>
   );
 }

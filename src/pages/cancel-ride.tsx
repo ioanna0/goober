@@ -27,14 +27,17 @@ export default function CancelRidePage() {
   };
 
   return (
-    <Container>
-      <Title>Cancel a Ride</Title>
+    <Container className="mx-auto max-w-md rounded-md bg-white p-6 shadow-md">
+      <Title order={2} className="mb-4 text-center">
+        Cancel a Ride
+      </Title>
       <NumberInput
         label="Ride ID"
         value={rideId}
         onChange={(value) => setRideId(value)}
+        className="mb-4 rounded-md border border-gray-300 p-2"
       />
-      <Button onClick={handleCancelRide} mt="md">
+      <Button onClick={handleCancelRide} fullWidth>
         Cancel Ride
       </Button>
     </Container>
