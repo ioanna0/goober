@@ -77,7 +77,6 @@ const desktopTheme: MantineThemeOverride = {
 
   // font-family and line-height used in most components
   fontFamily: 'Montserrat, sans-serif',
-  headings: { fontFamily: 'Montserrat, sans-serif' },
   lineHeights: {
     xs: '1.16',
     sm: '1.16',

@@ -13,7 +13,7 @@ export default function Navbar() {
             href="/rider"
             className="text-sm text-white hover:text-gray-200"
           >
-            I'm a Rider
+            I&apos;m a Rider
           </Link>
           <Link
             href="/request-ride"
