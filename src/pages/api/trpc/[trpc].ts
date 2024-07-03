@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { createNextApiHandler } from "@trpc/server/adapters/next";
 
 import { env } from "~/env";
