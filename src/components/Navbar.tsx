@@ -9,18 +9,27 @@ export default function Navbar() {
           Goober
         </Link>
         <div className="space-x-4">
-          <Link href="/request-ride" className="text-white hover:text-gray-200">
+          <Link
+            href="/request-ride"
+            className="text-sm text-white hover:text-gray-200"
+          >
             Request a Ride
           </Link>
-          <Link href="/cancel-ride" className="text-white hover:text-gray-200">
+          <Link
+            href="/cancel-ride"
+            className="text-sm text-white hover:text-gray-200"
+          >
             Cancel a Ride
           </Link>
-          <Link href="/view-rides" className="text-white hover:text-gray-200">
+          <Link
+            href="/view-rides"
+            className="text-sm text-white hover:text-gray-200"
+          >
             View Your Rides
           </Link>
           <Link
             href="/driver-dashboard"
-            className="text-white hover:text-gray-200"
+            className="text-sm text-white hover:text-gray-200"
           >
             Driver Dashboard
           </Link>

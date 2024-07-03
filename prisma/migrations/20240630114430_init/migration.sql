@@ -36,3 +36,11 @@ ALTER TABLE "Ride" ADD CONSTRAINT "Ride_riderId_fkey" FOREIGN KEY ("riderId") RE
 
 -- AddForeignKey
 ALTER TABLE "Ride" ADD CONSTRAINT "Ride_driverId_fkey" FOREIGN KEY ("driverId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- -- Add columns with default values
+-- ALTER TABLE "Ride" ADD COLUMN "pickupLat" FLOAT DEFAULT 0.0;
+-- ALTER TABLE "Ride" ADD COLUMN "pickupLng" FLOAT DEFAULT 0.0;
+-- ALTER TABLE "Ride" ADD COLUMN "dropoffLat" FLOAT DEFAULT 0.0;
+-- ALTER TABLE "Ride" ADD COLUMN "dropoffLng" FLOAT DEFAULT 0.0;
+
+ALTER TABLE "Ride" ADD COLUMN "distance" FLOAT DEFAULT 0.0;
