@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { db } from '~/server/db';
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-
+import { broadcastNewRide } from '../../../pages/api/websocket';
 
 export const gooberRouter = createTRPCRouter({
     requestRide: publicProcedure
@@ -30,6 +30,8 @@ export const gooberRouter = createTRPCRouter({
           distance: input.distance,
         },
       });
+      // Broadcast the new ride request to all connected clients
+      broadcastNewRide(ride);
       return ride;
     }),
     cancelRide: publicProcedure

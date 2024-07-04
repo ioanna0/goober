@@ -8,11 +8,42 @@ import {
   Paper,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 
 export default function DriverDashboard({ driverId }: { driverId: number }) {
   const getRequestsQuery = api.driver.getRequests.useQuery({ driverId });
   const acceptRequestMutation = api.driver.acceptRequest.useMutation();
+  const [requests, setRequests] = useState<any[]>([]);
+
+  useEffect(() => {
+    const ws = new WebSocket("ws://localhost:3000/api/websocket");
+
+    ws.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+    ws.onmessage = (event) => {
+      const newRequest = JSON.parse(event.data);
+      setRequests((prevRequests) => [...prevRequests, ...newRequest]);
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    // return () => {
+    //   ws.close();
+    // };
+  }, []);
+
+  useEffect(() => {
+    if (getRequestsQuery.data) {
+      const uniqueRequests = getRequestsQuery.data.filter(
+        (request) => !requests.some((r) => r.id === request.id),
+      );
+      setRequests([...requests, ...uniqueRequests]);
+    }
+  }, [getRequestsQuery.data]);
 
   const handleAcceptRequest = async (rideId: number) => {
     try {
@@ -48,8 +79,6 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
       </Container>
     );
   }
-
-  const requests = getRequestsQuery.data;
 
   return (
     <Container className="mx-auto max-w-3xl rounded-md bg-white shadow-xl">
