@@ -11,7 +11,12 @@ import { showNotification } from "@mantine/notifications";
 import { api } from "~/utils/api";
 
 export default function DriverDashboard({ driverId }: { driverId: number }) {
-  const getRequestsQuery = api.driver.getRequests.useQuery({ driverId });
+    const getRequestsQuery = api.driver.getRequests.useQuery(
+      { driverId },
+      {
+        refetchInterval: 5000, // Poll every 5 seconds
+      },
+    );
   const acceptRequestMutation = api.driver.acceptRequest.useMutation();
 
   const handleAcceptRequest = async (rideId: number) => {

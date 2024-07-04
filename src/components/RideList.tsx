@@ -12,7 +12,12 @@ import { showNotification } from "@mantine/notifications";
 import { api } from "~/utils/api";
 
 export default function RideList({ userId }: { userId: number }) {
-  const getRidesQuery = api.goober.getRides.useQuery({ userId });
+    const getRidesQuery = api.goober.getRides.useQuery(
+      { userId },
+      {
+        refetchInterval: 5000, // Poll every 5 seconds
+      },
+    );
   const cancelRideMutation = api.goober.cancelRide.useMutation();
 
   const handleCancelRide = async (rideId: number) => {
