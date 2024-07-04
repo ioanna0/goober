@@ -1,10 +1,16 @@
 import React, { useRef } from "react";
-import { useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
+import {
+  useLoadScript,
+  StandaloneSearchBox,
+  Libraries,
+} from "@react-google-maps/api";
 
 interface GooglePlacesAutocompleteProps {
   label: string;
   onPlaceSelected: (place: google.maps.places.PlaceResult) => void;
 }
+
+const libraries: Libraries = ["places"] as unknown as Libraries;
 
 export default function GooglePlacesAutocomplete({
   label,
@@ -12,7 +18,7 @@ export default function GooglePlacesAutocomplete({
 }: GooglePlacesAutocompleteProps) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries: ["places"],
+    libraries,
   });
 
   const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null);
