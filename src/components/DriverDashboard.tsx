@@ -42,12 +42,10 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
 
   useEffect(() => {
     if (getRequestsQuery.isSuccess && getRequestsQuery.data) {
-      console.log("getRequestsQuery.data", getRequestsQuery.data);
       const currentRide = getRequestsQuery.data.find(
         (ride: Ride) =>
           ride.status === "ACCEPTED" && ride.driverId === driverId,
       );
-      console.log("currentRide", currentRide);
       if (currentRide) {
         setCurrentRide(currentRide);
       }

@@ -5,7 +5,7 @@ dotenv.config();
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create a rider
+  // Create 2 rider
   await prisma.user.create({
     data: {
       email: 'rider@example.com',
@@ -13,10 +13,25 @@ async function main() {
     },
   });
 
-  // Create a driver
+  // Create 2 rider
+  await prisma.user.create({
+    data: {
+      email: 'rider1@example.com',
+      role: 'RIDER',
+    },
+  });
+
+  // Create 2 drivers
   await prisma.user.create({
     data: {
       email: 'driver@example.com',
+      role: 'DRIVER',
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      email: 'driver1@example.com',
       role: 'DRIVER',
     },
   });

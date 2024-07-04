@@ -15,32 +15,33 @@ export default function Home() {
 
   return (
     <Layout>
-      <main
-        className="flex min-h-screen flex-col items-center justify-center  bg-center"
-      >
+      <main className="flex min-h-screen flex-col items-center justify-center  bg-center">
         <Container className="rounded-md bg-white bg-opacity-90 p-6 text-center shadow-lg">
-          <Title order={1} className="mb-4 text-4xl font-bold text-gray-800">
+          <Title order={3} className="mb-8 text-xl font-bold text-gray-800">
             Welcome to Goober 🚚
           </Title>
           <Text className="mb-6 text-gray-600">
             Your reliable ride-sharing app
           </Text>
-          <div className="space-y-8">
+          <div>
             <div>
-              <Title order={2} className="mb-2 text-3xl font-semibold text-gray-800">
+              <Title
+                order={6}
+                className="text-md mb-8 font-semibold text-gray-800"
+              >
                 Rider Pages:
               </Title>
               <Group dir="column" gap="xs">
                 <Link href="/request-ride">
                   <Card
                     shadow="sm"
-                    padding="lg"
+                    padding="md"
                     radius="md"
                     withBorder
                     style={cardStyles}
                     className="hover:shadow-lg"
                   >
-                    <Text className="text-xl font-semibold text-blue-500">
+                    <Text className="text-md font-semibold text-blue-500">
                       Request a Ride
                     </Text>
                   </Card>
@@ -54,7 +55,7 @@ export default function Home() {
                     style={cardStyles}
                     className="hover:shadow-lg"
                   >
-                    <Text className="text-xl font-semibold text-blue-500">
+                    <Text className="text-md font-semibold text-blue-500">
                       Rides List
                     </Text>
                   </Card>
@@ -62,11 +63,14 @@ export default function Home() {
               </Group>
             </div>
             <div>
-              <Title order={2} className="mb-2 text-3xl font-semibold text-gray-800">
+              <Title
+                order={6}
+                className="mb-2 text-3xl font-semibold text-gray-800"
+              >
                 Driver:
               </Title>
               <Group dir="column" gap="xs">
-                <Link href="/driver-dashboard">
+                <Link href="/driver-dashboard?driver=1">
                   <Card
                     shadow="sm"
                     padding="lg"
@@ -75,8 +79,22 @@ export default function Home() {
                     style={cardStyles}
                     className="hover:shadow-lg"
                   >
-                    <Text className="text-xl font-semibold text-blue-500">
-                      Rides List
+                    <Text className="text-md font-semibold text-blue-500">
+                      Driver 1 Dashboard
+                    </Text>
+                  </Card>
+                </Link>
+                <Link href="/driver-dashboard?driver=2">
+                  <Card
+                    shadow="sm"
+                    padding="lg"
+                    radius="md"
+                    withBorder
+                    style={cardStyles}
+                    className="hover:shadow-lg"
+                  >
+                    <Text className="text-md font-semibold text-blue-500">
+                      Driver 2 Dashboard
                     </Text>
                   </Card>
                 </Link>
@@ -89,7 +107,7 @@ export default function Home() {
         .hover\\:shadow-lg:hover {
           ${Object.entries(cardHoverStyles)
             .map(([key, value]) => `${key}: ${value};`)
-            .join(' ')}
+            .join(" ")}
         }
       `}</style>
     </Layout>

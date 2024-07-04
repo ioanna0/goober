@@ -86,7 +86,7 @@ export default function RideList({ userId }: { userId: number }) {
             {ride.status === "PENDING" && (
               <Button
                 variant="gradient"
-                gradient={{ from: "indigo", to: "cyan" }}
+                gradient={{ from: "red", to: "darkred" }}
                 onClick={() => handleCancelRide(ride.id)}
                 fullWidth
                 className="mt-4"
