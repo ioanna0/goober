@@ -8,31 +8,98 @@ import {
   Paper,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 
-export default function DriverDashboard({ driverId }: { driverId: number }) {
-    const getRequestsQuery = api.driver.getRequests.useQuery(
-      { driverId },
-      {
-        refetchInterval: 5000, // Poll every 5 seconds
-      },
-    );
-  const acceptRequestMutation = api.driver.acceptRequest.useMutation();
+type Ride = {
+  id: number;
+  pickup: string;
+  dropoff: string;
+  fare: number;
+  status: "PENDING" | "ACCEPTED" | "COMPLETED" | "CANCELLED";
+  riderId: number;
+  driverId: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+  pickupLat: number;
+  pickupLng: number;
+  dropoffLat: number;
+  dropoffLng: number;
+  distance: number;
+};
 
-  const handleAcceptRequest = async (rideId: number) => {
-    try {
-      await acceptRequestMutation.mutateAsync({ rideId, driverId });
+export default function DriverDashboard({ driverId }: { driverId: number }) {
+  const [currentRide, setCurrentRide] = useState<any>(null);
+  const [requests, setRequests] = useState<Ride[]>([]);
+
+  const getRequestsQuery = api.driver.getRequests.useQuery(
+    { driverId },
+    {
+      enabled: !currentRide,
+      refetchInterval: 5000, // Poll every 5 seconds
+    },
+  );
+
+  useEffect(() => {
+    if (getRequestsQuery.isSuccess && getRequestsQuery.data) {
+      console.log("getRequestsQuery.data", getRequestsQuery.data);
+      const currentRide = getRequestsQuery.data.find(
+        (ride: Ride) =>
+          ride.status === "ACCEPTED" && ride.driverId === driverId,
+      );
+      console.log("currentRide", currentRide);
+      if (currentRide) {
+        setCurrentRide(currentRide);
+      }
+      setRequests(getRequestsQuery.data);
+    }
+  }, [getRequestsQuery.isSuccess, getRequestsQuery.data]);
+
+  const acceptRequestMutation = api.driver.acceptRequest.useMutation({
+    onSuccess: (ride) => {
+      setCurrentRide(ride);
+      setRequests([]);
       showNotification({
         title: "Request Accepted",
         message: "You have accepted the ride request",
         color: "green",
       });
-    } catch (error) {
+    },
+    onError: (error) => {
       showNotification({
         title: "Error",
-        message: "Failed to accept ride request",
+        message: error.message,
         color: "red",
       });
+    },
+  });
+
+  const completeRideMutation = api.driver.completeRide.useMutation({
+    onSuccess: () => {
+      setCurrentRide(null);
+      showNotification({
+        title: "Ride Completed",
+        message: "You have completed the ride",
+        color: "green",
+      });
+      getRequestsQuery.refetch();
+    },
+    onError: (error) => {
+      showNotification({
+        title: "Error",
+        message: error.message,
+        color: "red",
+      });
+    },
+  });
+
+  const handleAcceptRequest = (rideId: number) => {
+    acceptRequestMutation.mutate({ rideId, driverId });
+  };
+
+  const handleCompleteRide = () => {
+    if (currentRide) {
+      completeRideMutation.mutate({ rideId: currentRide.id, driverId });
     }
   };
 
@@ -54,43 +121,66 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
     );
   }
 
-  const requests = getRequestsQuery.data;
-
   return (
     <Container className="mx-auto max-w-3xl rounded-md bg-white shadow-xl">
       <Title order={3} mb={10} className="text-center text-indigo-600">
         Ride Requests
       </Title>
-      <List className="space-y-4">
-        {requests?.map((request) => (
-          <Paper
-            key={request.id}
-            shadow="sm"
-            p="md"
-            withBorder
-            className="transition-shadow duration-300 hover:shadow-lg"
-          >
-            <div className="mb-2 font-bold text-gray-700">
-              {request.pickup} to {request.dropoff}
+      {currentRide ? (
+        <div>
+          <Title order={3} className="text-center text-indigo-600">
+            Current Ride
+          </Title>
+          <div className="mb-4 rounded-md border p-4 shadow-sm">
+            <div className="mb-2 font-bold">
+              {currentRide.pickup} to {currentRide.dropoff}
             </div>
-            <div className="text-gray-600">
-              Fare: ${request.fare.toFixed(2)} USD
-            </div>
-            <div className="text-gray-600">
-              Distance: {request.distance.toFixed(2)} km
-            </div>
+            <div>Fare: {currentRide.fare} USD</div>
             <Button
-              variant="gradient"
-              gradient={{ from: "indigo", to: "cyan" }}
-              onClick={() => handleAcceptRequest(request.id)}
-              className="mt-4"
-              fullWidth
+              onClick={handleCompleteRide}
+              className="mt-2 bg-blue-500 text-white hover:bg-blue-600"
             >
-              Accept
+              Complete Ride
             </Button>
-          </Paper>
-        ))}
-      </List>
+          </div>
+        </div>
+      ) : (
+        <List className="space-y-4">
+          {requests.length === 0 && (
+            <Notification color="gray" title="No ride requests">
+              There are no ride requests at the moment
+            </Notification>
+          )}
+          {requests?.map((request) => (
+            <Paper
+              key={request.id}
+              shadow="sm"
+              p="md"
+              withBorder
+              className="transition-shadow duration-300 hover:shadow-lg"
+            >
+              <div className="mb-2 font-bold text-gray-700">
+                {request.pickup} to {request.dropoff}
+              </div>
+              <div className="text-gray-600">
+                Fare: ${request.fare.toFixed(2)} USD
+              </div>
+              <div className="text-gray-600">
+                Distance: {request.distance.toFixed(2)} km
+              </div>
+              <Button
+                variant="gradient"
+                gradient={{ from: "indigo", to: "cyan" }}
+                onClick={() => handleAcceptRequest(request.id)}
+                className="mt-4"
+                fullWidth
+              >
+                Accept
+              </Button>
+            </Paper>
+          ))}
+        </List>
+      )}
     </Container>
   );
 }

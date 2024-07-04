@@ -5,8 +5,10 @@ import { showNotification } from "@mantine/notifications";
 import { calculateFare } from "~/utils/goober-utils";
 import GooglePlacesAutocomplete from "./GooglePlacesAutocomplete";
 import RouteMap from "./RouteMap";
+import { useRouter } from "next/router";
 
 export default function RideForm() {
+  const router = useRouter();
   const [pickup, setPickup] = useState<string>("");
   const [dropoff, setDropoff] = useState<string>("");
   const [pickupLat, setPickupLat] = useState<number>();
@@ -68,6 +70,7 @@ export default function RideForm() {
         message: "Your ride has been requested successfully",
         color: "green",
       });
+      router.push("/view-rides");
     } catch (error) {
       setMessage(null);
       showNotification({
