@@ -28,6 +28,7 @@
     "@trpc/react": "^9.27.4",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "@types/googlemaps": "^3.43.3",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "geist": "^1.3.0",
