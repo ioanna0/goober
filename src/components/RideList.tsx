@@ -83,7 +83,7 @@ export default function RideList({ userId }: { userId: number }) {
               Distance: {ride.distance.toFixed(2)} km
             </div>
             <div className="text-gray-600">Status: {ride.status}</div>
-            {ride.status !== "CANCELLED" && (
+            {ride.status === "PENDING" && (
               <Button
                 variant="gradient"
                 gradient={{ from: "indigo", to: "cyan" }}

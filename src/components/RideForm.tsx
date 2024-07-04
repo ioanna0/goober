@@ -26,7 +26,7 @@ export default function RideForm() {
       const calculatedFare = calculateFare(distance.value, duration.value);
       setFare(calculatedFare);
       setMessage(
-        `Your ride will be <i>${distance.text} KM</i> long, will take ${duration.text}, and will cost <b>${calculatedFare} USD</b>.`,
+        `Your ride will be <i>${distance.text}</i> long, will take ${duration.text}, and will cost <b>${calculatedFare} USD</b>.`,
       );
     }
   }, [distance, duration]);
@@ -68,11 +68,6 @@ export default function RideForm() {
         message: "Your ride has been requested successfully",
         color: "green",
       });
-      const distanceFormatted = distance?.text;
-      const fareFormatted = fare?.toFixed(2);
-      setMessage(
-        `Your ride will be <i>${distanceFormatted}</i> long and will cost <b>${fareFormatted} USD</b>.`,
-      );
     } catch (error) {
       setMessage(null);
       showNotification({

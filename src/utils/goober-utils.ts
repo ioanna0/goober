@@ -5,7 +5,6 @@ export const calculateFare = (distanceM: number, durationSecs = 0, surgeMultipli
 
   const minutes = Math.floor(durationSecs / 60);
   const distanceKm = Math.floor(distanceM / 1000);
-  console.log('minutes', minutes);
   const distanceFare = ratePerKm * distanceKm;
   const timeFare = timeFactor * minutes;
 
