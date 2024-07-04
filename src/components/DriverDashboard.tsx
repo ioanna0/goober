@@ -8,28 +8,12 @@ import {
   Paper,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { Ride } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 
-type Ride = {
-  id: number;
-  pickup: string;
-  dropoff: string;
-  fare: number;
-  status: "PENDING" | "ACCEPTED" | "COMPLETED" | "CANCELLED";
-  riderId: number;
-  driverId: number | null;
-  createdAt: Date;
-  updatedAt: Date;
-  pickupLat: number;
-  pickupLng: number;
-  dropoffLat: number;
-  dropoffLng: number;
-  distance: number;
-};
-
 export default function DriverDashboard({ driverId }: { driverId: number }) {
-  const [currentRide, setCurrentRide] = useState<any>(null);
+  const [currentRide, setCurrentRide] = useState<Ride | null>(null);
   const [requests, setRequests] = useState<Ride[]>([]);
 
   const getRequestsQuery = api.driver.getRequests.useQuery(
@@ -46,9 +30,8 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
         (ride: Ride) =>
           ride.status === "ACCEPTED" && ride.driverId === driverId,
       );
-      if (currentRide) {
-        setCurrentRide(currentRide);
-      }
+      setCurrentRide(currentRide ?? null);
+
       setRequests(getRequestsQuery.data);
     }
   }, [getRequestsQuery.isSuccess, getRequestsQuery.data]);
@@ -80,7 +63,7 @@ export default function DriverDashboard({ driverId }: { driverId: number }) {
         message: "You have completed the ride",
         color: "green",
       });
-      getRequestsQuery.refetch();
+      getRequestsQuery.refetch().catch(console.error);
     },
     onError: (error) => {
       showNotification({

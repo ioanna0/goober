@@ -10,22 +10,28 @@ export default function Navbar() {
         </Link>
         <div className="space-x-4">
           <Link
-            href="/request-ride"
+            href="/rider?rider=1"
             className="text-sm text-white hover:text-gray-200"
           >
-            Rider: Request a Ride
+            Rider 1
           </Link>
           <Link
-            href="/view-rides"
+            href="/rider?rider=4"
             className="text-sm text-white hover:text-gray-200"
           >
-            Rider: View Your Rides
+            Rider 2
           </Link>
           <Link
-            href="/driver-dashboard"
+            href="/driver-dashboard?driver=2"
             className="text-sm text-white hover:text-gray-200"
           >
-            Driver: View Driver Rides
+            Driver 1
+          </Link>
+          <Link
+            href="/driver-dashboard?driver=5"
+            className="text-sm text-white hover:text-gray-200"
+          >
+            Driver 2
           </Link>
         </div>
       </Container>

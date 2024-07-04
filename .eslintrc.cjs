@@ -44,7 +44,8 @@ const config = {
       "rules": {
         "@typescript-eslint/ban-ts-comment": "error",
         "@typescript-eslint/no-unsafe-assignment": "error",
-        "@typescript-eslint/no-unsafe-call": "error"
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-explicit-any": "off",
       }
     },
     {

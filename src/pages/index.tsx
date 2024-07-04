@@ -32,7 +32,7 @@ export default function Home() {
                 Rider Pages:
               </Title>
               <Group dir="column" gap="xs">
-                <Link href="/request-ride">
+                <Link href="/rider?rider=1">
                   <Card
                     shadow="sm"
                     padding="md"
@@ -42,21 +42,21 @@ export default function Home() {
                     className="hover:shadow-lg"
                   >
                     <Text className="text-md font-semibold text-blue-500">
-                      Request a Ride
+                      Rider 1
                     </Text>
                   </Card>
                 </Link>
-                <Link href="/view-rides">
+                <Link href="/rider?rider=4">
                   <Card
                     shadow="sm"
-                    padding="lg"
+                    padding="md"
                     radius="md"
                     withBorder
                     style={cardStyles}
                     className="hover:shadow-lg"
                   >
                     <Text className="text-md font-semibold text-blue-500">
-                      Rides List
+                      Rider 2
                     </Text>
                   </Card>
                 </Link>
@@ -67,23 +67,9 @@ export default function Home() {
                 order={6}
                 className="mb-2 text-3xl font-semibold text-gray-800"
               >
-                Driver:
+                Driver Pages:
               </Title>
               <Group dir="column" gap="xs">
-                <Link href="/driver-dashboard?driver=1">
-                  <Card
-                    shadow="sm"
-                    padding="lg"
-                    radius="md"
-                    withBorder
-                    style={cardStyles}
-                    className="hover:shadow-lg"
-                  >
-                    <Text className="text-md font-semibold text-blue-500">
-                      Driver 1 Dashboard
-                    </Text>
-                  </Card>
-                </Link>
                 <Link href="/driver-dashboard?driver=2">
                   <Card
                     shadow="sm"
@@ -94,7 +80,21 @@ export default function Home() {
                     className="hover:shadow-lg"
                   >
                     <Text className="text-md font-semibold text-blue-500">
-                      Driver 2 Dashboard
+                      Driver 1
+                    </Text>
+                  </Card>
+                </Link>
+                <Link href="/driver-dashboard?driver=5">
+                  <Card
+                    shadow="sm"
+                    padding="lg"
+                    radius="md"
+                    withBorder
+                    style={cardStyles}
+                    className="hover:shadow-lg"
+                  >
+                    <Text className="text-md font-semibold text-blue-500">
+                      Driver 2
                     </Text>
                   </Card>
                 </Link>

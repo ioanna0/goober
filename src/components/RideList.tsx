@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 import {
   Container,
   Title,
@@ -9,15 +10,16 @@ import {
   Text,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { Ride } from "@prisma/client";
 import { api } from "~/utils/api";
 
-export default function RideList({ userId }: { userId: number }) {
-    const getRidesQuery = api.goober.getRides.useQuery(
-      { userId },
-      {
-        refetchInterval: 5000, // Poll every 5 seconds
-      },
-    );
+export default function RideList({
+  getRidesQuery,
+  rides,
+}: {
+  getRidesQuery: any;
+  rides: Ride[];
+}) {
   const cancelRideMutation = api.goober.cancelRide.useMutation();
 
   const handleCancelRide = async (rideId: number) => {
@@ -29,6 +31,7 @@ export default function RideList({ userId }: { userId: number }) {
           message: "Your ride has been cancelled successfully",
           color: "green",
         });
+        getRidesQuery.refetch();
       } catch (error) {
         showNotification({
           title: "Error",
@@ -56,8 +59,6 @@ export default function RideList({ userId }: { userId: number }) {
       </Container>
     );
   }
-
-  const rides = getRidesQuery.data;
 
   return (
     <Container className="mx-auto max-w-3xl rounded-md bg-white p-8 shadow-xl">
@@ -100,3 +101,4 @@ export default function RideList({ userId }: { userId: number }) {
     </Container>
   );
 }
+/* eslint-enable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
